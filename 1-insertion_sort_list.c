@@ -4,7 +4,7 @@
  * @list: doubly linked list.
  * Return: Nothing.
  */
-void insertion_sort_list(listint_t **list);
+void insertion_sort_list(listint_t **list)
 {
 	listint_t *len, *current;
 
