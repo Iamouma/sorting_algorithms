@@ -1,6 +1,6 @@
 #include "sort.h"
 /**
- * swap - swaps two integers.
+ * swap - it swaps two integers.
  * @n: pointer to the first integer.
  * @m: pointer to the second integer.
  */
