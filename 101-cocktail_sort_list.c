@@ -47,23 +47,19 @@ void cocktail_sort_list(listint_t **list)
  */
 void swap_nodes(listint_t *left, listint_t *right, listint_t **list)
 {
+	listint_t *swap;
 
-	listint_t *prev;
-	listint_t *next;
-
-	prev = left->prev;
-	next = right->next;
-
-	if (prev)
-		prev->next = right;
+	if (left->prev)
+		left->prev->next = right;
 	else
 		*list = right;
-
-	right->prev = prev;
+	if (right->next)
+		right->next->prev = left;
+	right->prev = left->prev;
 	left->prev = right;
-	right->next = left;
-	left->next = next;
+	swap = right;
+	left->next = right->next;
+	swap->next = left;
 
-	if (next)
-		next->prev = left;
+	print_list(*list);
 }
