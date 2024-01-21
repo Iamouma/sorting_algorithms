@@ -42,11 +42,11 @@ void Copy_Array(int *source, int start, int end, int *dest);
 void TopDownMerge(int *source, int start, int cent, int end, int *dest);
 void TopDownSplitMerge(int *source, int start, int end, int *dest);
 void merge_sort(int *array, size_t size);
-
-
-
-
-
+int Parent(int i);
+int LeftChild(int i);
+void ConvertToHeap(int *array, size_t size);
+void SiftDown(int *array, size_t size, int beg, int last);
+void heap_sort(int *array, size_t size);
 
 
 
