@@ -37,11 +37,11 @@ void shell_sort(int *array, size_t size);
 void swap_nodes(listint_t *left, listint_t *right, listint_t **list);
 void cocktail_sort_list(listint_t **list);
 void counting_sort(int *array, size_t size);
-
-
-
-
-
+void Print_Array(int *array, int start, int end);
+void Copy_Array(int *source, int start, int end, int *dest);
+void TopDownMerge(int *source, int start, int cent, int end, int *dest);
+void TopDownSplitMerge(int *source, int start, int end, int *dest);
+void merge_sort(int *array, size_t size);
 
 
 
