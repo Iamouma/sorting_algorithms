@@ -47,7 +47,11 @@ int LeftChild(int i);
 void ConvertToHeap(int *array, size_t size);
 void SiftDown(int *array, size_t size, int beg, int last);
 void heap_sort(int *array, size_t size);
-
+void init_jog_count(int *jog_count);
+void build_jogs(int *jog_count, int **jogs);
+int get_max(int *array, size_t size);
+void flat_array(int *array, size_t size, int **jogs, int *jog_count);
+void radix_sort(int *array, size_t size);
 
 
 
