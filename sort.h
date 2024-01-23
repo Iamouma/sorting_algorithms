@@ -52,10 +52,9 @@ void build_jogs(int *jog_count, int **jogs);
 int get_max(int *array, size_t size);
 void flat_array(int *array, size_t size, int **jogs, int *jog_count);
 void radix_sort(int *array, size_t size);
-void bit_comp(bool high, int *a, size_t size);
-void bit_merge(bool high, int *a, size_t size, size_t original_size);
-void bitonic_sort_divide(bool high, int *a, size_t size, size_t original_size);
-void bitonic_sort(int *array, size_t size);
+int hoare_partition(int *array, size_t low, size_t high, size_t size);
+void hoare_quicksort(int *array, size_t low, size_t high, size_t size);
+void quick_sort_hoare(int *array, size_t size);
 
 
 
