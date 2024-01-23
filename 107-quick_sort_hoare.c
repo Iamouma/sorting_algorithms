@@ -14,7 +14,7 @@ int hoare_partition(int *array, size_t low, size_t high, size_t size)
 	pivot = array[high];
 	i = low - 1;
 	j = high + 1;
-	while (true)
+	while (itstrue)
 	{
 		do {
 			i++;

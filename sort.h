@@ -55,7 +55,10 @@ void radix_sort(int *array, size_t size);
 int hoare_partition(int *array, size_t low, size_t high, size_t size);
 void hoare_quicksort(int *array, size_t low, size_t high, size_t size);
 void quick_sort_hoare(int *array, size_t size);
-
+void bit_comp(bool up, int *a, size_t size);
+void bit_merge(bool up, int *a, size_t size, size_t original_size);
+void bitonic_sort_d(bool up, int *a, size_t size, size_t original_size);
+void bitonic_sort(int *array, size_t size);
 
 
 #endif
