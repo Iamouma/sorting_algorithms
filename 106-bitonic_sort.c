@@ -2,11 +2,11 @@
 #include <stdio.h>
 /**
  * bit_comp - sorts contents of current subarray.
- * @high: sort in ascending order.
+ * @up: sort in ascending order.
  * @a: subarray in current frame of recurssion.
  * @size: size of a.
  */
-void bit_comp(bool high, int *a, size_t size)
+void bit_comp(bool up, int *a, size_t size)
 {
 	size_t len, i;
 	int current;
@@ -14,7 +14,7 @@ void bit_comp(bool high, int *a, size_t size)
 	len = size / 2;
 	for (i = 0; i < len; i++)
 	{
-		if ((a[i] > a[i + len]) == high)
+		if ((a[i] > a[i + len]) == up)
 		{
 			current = a[i];
 			a[i] = a[i + len];
@@ -25,12 +25,12 @@ void bit_comp(bool high, int *a, size_t size)
 
 /**
  * bit_merge - sorts subarrays via bit_comp.
- * @high: sort in ascending order.
+ * @up: sort in ascending order.
  * @a: subarray in previous frame of recursion.
  * @size: size of a.
  * @original_size: number of elements in source array being sorted.
  */
-void bit_merge(bool high, int *a, size_t size, size_t original_size)
+void bit_merge(bool up, int *a, size_t size, size_t original_size)
 {
 	int *first, *second;
 
@@ -38,20 +38,20 @@ void bit_merge(bool high, int *a, size_t size, size_t original_size)
 	{
 		first = a;
 		second = a + (size / 2);
-		bit_comp(high, a, size);
-		bit_merge(high, first, size / 2, original_size);
-		bit_merge(high, second, size / 2, original_size);
+		bit_comp(up, a, size);
+		bit_merge(up, first, size / 2, original_size);
+		bit_merge(up, second, size / 2, original_size);
 	}
 }
 
 /**
- * bitonic_sort_divide - divides array into a binary tree of subarrays,
- * @high: sort in ascending order.
+ * bitonic_sort_d - divides array into a binary tree of subarrays.
+ * @up: sort in ascending order.
  * @a: subarray in previous frame of recursion.
  * @size: size of a.
  * @original_size: number of elements in source array being sorted.
  */
-void bitonic_sort_divide(bool high, int *a, size_t size, size_t original_size)
+void bitonic_sort_d(bool up, int *a, size_t size, size_t original_size)
 {
 	int *first, *second;
 
@@ -60,13 +60,13 @@ void bitonic_sort_divide(bool high, int *a, size_t size, size_t original_size)
 	first = a;
 	second = a + (size / 2);
 	printf("Merging [%lu/%lu] (%s):\n", size, original_size,
-		(high ? "UP" : "DOWN"));
+		(up ? "UP" : "DOWN"));
 	print_array(a, size);
-	bitonic_sort_divide(true, first, size / 2, original_size);
-	bitonic_sort_divide(false, second, size / 2, original_size);
+	bitonic_sort_d(true, first, size / 2, original_size);
+	bitonic_sort_d(false, second, size / 2, original_size);
 	bit_merge(high, first, size, original_size);
 	printf("Result [%lu/%lu] (%s):\n", size, original_size,
-		(high ? "UP" : "DOWN"));
+		(up ? "UP" : "DOWN"));
 	print_array(a, size);
 }
 
@@ -80,5 +80,5 @@ void bitonic_sort(int *array, size_t size)
 	if (!array || size == 0)
 		return;
 
-	bitonic_sort_divide(true, array, size, size);
+	bitonic_sort_d(true, array, size, size);
 }
