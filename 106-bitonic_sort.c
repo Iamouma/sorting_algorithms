@@ -1,84 +1,84 @@
 #include "sort.h"
-#include <stdio.h>
-/**
- * bit_comp - sorts contents of current subarray.
- * @up: sort in ascending order.
- * @a: subarray in current frame of recurssion.
- * @size: size of a.
- */
-void bit_comp(bool up, int *a, size_t size)
-{
-	size_t len, i;
-	int current;
 
-	len = size / 2;
-	for (i = 0; i < len; i++)
+void swap_inte(int *a, int *b);
+void bitonic_merge(int *array, size_t size, size_t beg, size_t cent, char end);
+void bitonic_cent(int *array, size_t size, size_t beg, size_t cent, char end);
+void bitonic_sort(int *array, size_t size);
+/**
+ * swap_inte - swaps two integers in array.
+ * @a: first integer to swap.
+ * @b: seconf integer to swap.
+ */
+void swap_inte(int *a, int *b)
+{
+	int len;
+
+	len = *a;
+	*a = *b;
+	*b = len;
+}
+
+/**
+ * bitonic_merge - sorts an array of integers.
+ * @array: array of integers.
+ * @size: size of the array.
+ * @beg: starting index.
+ * @cent: size of the sequence to sort.
+ * @end: direction to sort in.
+ */
+void bitonic_merge(int *array, size_t size, size_t beg, size_t cent, char end)
+{
+	size_t i, current = cent / 2;
+
+	if (cent > 1)
 	{
-		if ((a[i] > a[i + len]) == up)
+		for (i = beg; i < beg + current; i++)
 		{
-			current = a[i];
-			a[i] = a[i + len];
-			a[i + len] = current;
+			if ((end == UP && array[i] > array[i + current]) ||
+				(end == DOWN && array[i] < array[i + current]))
+				swap_inte(array + i, array + i + current);
 		}
+		bitonic_merge(array, size, beg, current, end);
+		bitonic_merge(array, size, beg + current, current, end);
 	}
 }
 
 /**
- * bit_merge - sorts subarrays via bit_comp.
- * @up: sort in ascending order.
- * @a: subarray in previous frame of recursion.
- * @size: size of a.
- * @original_size: number of elements in source array being sorted.
+ * bitonic_cent - converts an array of integers into a bitonic sequence.
+ * @array: array of integers.
+ * @size: size of the array.
+ * @beg: starting index.
+ * @cent: size of a block.
+ * @end: direction to sort.
  */
-void bit_merge(bool up, int *a, size_t size, size_t original_size)
+void bitonic_cent(int *array, size_t size, size_t beg, size_t cent, char end)
 {
-	int *first, *second;
+	size_t temp = cent / 2;
+	char *str = (end == UP) ? "UP" : "DOWN";
 
-	if (size > 1)
+	if (cent > 1)
 	{
-		first = a;
-		second = a + (size / 2);
-		bit_comp(up, a, size);
-		bit_merge(up, first, size / 2, original_size);
-		bit_merge(up, second, size / 2, original_size);
+		printf("Merging [%lu/%lu] (%s):\n", cent, size, str);
+		print_array(array + beg, cent);
+
+		bitonic_cent(array, size, beg, temp, UP);
+		bitonic_cent(array, size, beg + temp, temp, DOWN);
+		bitonic_merge(array, size, beg, cent, end);
+
+		printf("Result [%lu/%lu] (%s):\n", cent, size, str);
+		print_array(array + beg, cent);
 	}
 }
 
 /**
- * bitonic_sort_d - divides array into a binary tree of subarrays.
- * @up: sort in ascending order.
- * @a: subarray in previous frame of recursion.
- * @size: size of a.
- * @original_size: number of elements in source array being sorted.
- */
-void bitonic_sort_d(bool up, int *a, size_t size, size_t original_size)
-{
-	int *first, *second;
-
-	if (size <= 1)
-		return;
-	first = a;
-	second = a + (size / 2);
-	printf("Merging [%lu/%lu] (%s):\n", size, original_size,
-		(up ? "UP" : "DOWN"));
-	print_array(a, size);
-	bitonic_sort_d(true, first, size / 2, original_size);
-	bitonic_sort_d(false, second, size / 2, original_size);
-	bit_merge(high, first, size, original_size);
-	printf("Result [%lu/%lu] (%s):\n", size, original_size,
-		(up ? "UP" : "DOWN"));
-	print_array(a, size);
-}
-
-/**
- * bitonic_sort - sorts array of integers in ascending order.
- * @array: array of values to print.
+ * bitonic_sort - sorts an array of integers in ascending order.
+ * @array: array of integers.
  * @size: size of the array.
  */
 void bitonic_sort(int *array, size_t size)
 {
-	if (!array || size == 0)
+	if (array == NULL || size < 2)
 		return;
 
-	bitonic_sort_d(true, array, size, size);
+	bitonic_cent(array, size, 0, size, UP);
 }
