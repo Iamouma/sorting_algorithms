@@ -34,7 +34,7 @@ int hoare_partition(int *array, size_t low, size_t high, size_t size)
 		} while (array[i] < pivot);
 		do {
 			j--;
-		} while (array[j] < pivot);
+		} while (array[j] > pivot);
 
 		if (i < j)
 		{
@@ -44,7 +44,7 @@ int hoare_partition(int *array, size_t low, size_t high, size_t size)
 	}
 
 	return (i);
-}	
+}
 
 /**
  * hoare_quicksort - sorts array of integers.
@@ -72,8 +72,8 @@ void hoare_quicksort(int *array, size_t low, size_t high, size_t size)
  */
 void quick_sort_hoare(int *array, size_t size)
 {
-	if (!array || size < 2)
+	if (array == NULL || size < 2)
 		return;
 
-	hoare_quicksort(array, 0, size - 1, size);
+	hoare_quicksort(array, size, 0, size - 1);
 }
